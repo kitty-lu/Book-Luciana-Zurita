@@ -10,6 +10,218 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* ===== AJUSTES SOLICITADOS ===== */
+        /* 1. FOTO DE FONDO EN HERO (ya estaba) */
+        .hero {
+            position: relative;
+            background-image: url('https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=1920');
+            background-size: cover;
+            background-position: center 20%;
+            background-repeat: no-repeat;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.35);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .hero .hero-content,
+        .hero .scroll-indicator {
+            position: relative;
+            z-index: 2;
+        }
+        .hero .hero-title .line,
+        .hero .subtitle,
+        .hero .hero-description {
+            color: #fff;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+        @media (max-width: 768px) {
+            .hero { background-position: center 30%; }
+        }
+
+        /* 2. COMP CARD REORGANIZADA (más equilibrada, nada "chueco") */
+        .compcard-grid-modern {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+        /* Foto principal */
+        .compcard-main-photo {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            height: 100%;
+        }
+        .compcard-main-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        /* Lado derecho: info + miniaturas */
+        .compcard-right {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        /* Info (mismo estilo que antes) */
+        .compcard-info {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+        }
+        .model-name {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--rose-primary);
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            background: var(--light-gray);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        .stat-item:hover {
+            background: var(--rose-lighter);
+            transform: translateY(-3px);
+        }
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.3rem;
+        }
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        .experience-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 2rem;
+        }
+        .tag {
+            padding: 0.5rem 1.2rem;
+            background: linear-gradient(135deg, var(--rose-primary), var(--gold));
+            color: var(--white);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+        /* Miniaturas adicionales en fila */
+        .compcard-thumbnails {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        .compcard-thumbnails img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .compcard-thumbnails img:hover {
+            transform: scale(1.02);
+        }
+        /* Responsive para comp card */
+        @media (max-width: 900px) {
+            .compcard-grid-modern {
+                grid-template-columns: 1fr;
+            }
+            .compcard-thumbnails {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 500px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .compcard-thumbnails {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 3. ELIMINAR FORMULARIO DE CONTACTO (solo info) */
+        .contact-content-simple {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .contact-info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+        .contact-item {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            padding: 1.8rem;
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        .contact-icon {
+            color: var(--rose-primary);
+            flex-shrink: 0;
+        }
+        .contact-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .contact-item a, .contact-item p {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+        }
+        .contact-item a:hover {
+            color: var(--rose-primary);
+        }
+        @media (max-width: 700px) {
+            .contact-info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Pequeño ajuste para que el footer se vea bien */
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+    </style>
 </head>
 <body>
     <nav id="navbar">
@@ -24,7 +236,6 @@
                 <li><a href="#home" class="nav-link">Inicio</a></li>
                 <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
                 <li><a href="#compcard" class="nav-link">Comp Card</a></li>
-                <li><a href="#videos" class="nav-link">Videos</a></li>
                 <li><a href="#about" class="nav-link">Sobre Mí</a></li>
                 <li><a href="#contact" class="nav-link">Contacto</a></li>
             </ul>
@@ -34,17 +245,17 @@
     <section id="home" class="hero">
         <div class="hero-content">
             <div class="hero-text fade-in">
-                <p class="subtitle">Professional Model</p>
+                <p class="subtitle">Modelo & Brand Image</p>
                 <h1 class="hero-title">
                     <span class="line">Vania</span>
                     <span class="line">Zurita</span>
                 </h1>
-                <p class="hero-description">Editorial · Comercial · Pasarela</p>
+                <p class="hero-description">Imagen de Marca · Activaciones · Pasarela</p>
+                <p class="hero-mini">
+  Presencia · Elegancia · Conexión
+</p>
                 <a href="#portfolio" class="cta-button">Ver Portfolio</a>
             </div>
-        </div>
-        <div class="scroll-indicator">
-            <span></span>
         </div>
     </section>
 
@@ -115,6 +326,7 @@
         </div>
     </section>
 
+    <!-- COMP CARD REESTRUCTURADA (FOTOS ALINEADAS, NADA CHUECO) -->
     <section id="compcard" class="compcard-section">
         <div class="container">
             <div class="section-header">
@@ -122,104 +334,70 @@
                 <p class="section-subtitle">Información profesional</p>
             </div>
 
-            <div class="compcard-grid">
-                <div class="compcard-photo main-photo">
-                    <img src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Vania Zurita Main">
+            <div class="compcard-grid-modern">
+                <!-- Foto principal izquierda -->
+                <div class="compcard-main-photo">
+                    <img src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Vania Zurita Main">
                 </div>
 
-                <div class="compcard-info">
-                    <h3 class="model-name">Vania Zurita</h3>
-
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <span class="stat-label">Altura</span>
-                            <span class="stat-value">175 cm</span>
+                <!-- Lado derecho: info + miniaturas -->
+                <div class="compcard-right">
+                    <!-- Info (nombre, stats, tags) -->
+                    <div class="compcard-info">
+                        <h3 class="model-name">Vania Zurita</h3>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <span class="stat-label">Altura</span>
+                                <span class="stat-value">175 cm</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Busto</span>
+                                <span class="stat-value">84 cm</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Cintura</span>
+                                <span class="stat-value">60 cm</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Cadera</span>
+                                <span class="stat-value">88 cm</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Calzado</span>
+                                <span class="stat-value">38 EU</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Cabello</span>
+                                <span class="stat-value">Castaño</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Ojos</span>
+                                <span class="stat-value">Verdes</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Talla</span>
+                                <span class="stat-value">S / 36</span>
+                            </div>
                         </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Busto</span>
-                            <span class="stat-value">84 cm</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Cintura</span>
-                            <span class="stat-value">60 cm</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Cadera</span>
-                            <span class="stat-value">88 cm</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Calzado</span>
-                            <span class="stat-value">38 EU</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Cabello</span>
-                            <span class="stat-value">Castaño</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Ojos</span>
-                            <span class="stat-value">Verdes</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Talla</span>
-                            <span class="stat-value">S / 36</span>
+                        <div class="experience-tags">
+                            <span class="tag">Editorial</span>
+                            <span class="tag">Comercial</span>
+                            <span class="tag">Pasarela</span>
+                            <span class="tag">Beauty</span>
+                            <span class="tag">Fitness</span>
                         </div>
                     </div>
 
-                    <div class="experience-tags">
-                        <span class="tag">Editorial</span>
-                        <span class="tag">Comercial</span>
-                        <span class="tag">Pasarela</span>
-                        <span class="tag">Beauty</span>
-                        <span class="tag">Fitness</span>
+                    <!-- Miniaturas adicionales en fila (ya no están "chuecas") -->
+                    <div class="compcard-thumbnails">
+                        <img src="https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Vania Profile 2">
+                        <img src="https://images.pexels.com/photos/1055691/pexels-photo-1055691.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Vania Profile 3">
                     </div>
-                </div>
-
-                <div class="compcard-photos">
-                    <img src="https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Vania Profile 2">
-                    <img src="https://images.pexels.com/photos/1055691/pexels-photo-1055691.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Vania Profile 3">
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="videos" class="videos-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Videos</h2>
-                <p class="section-subtitle">Pasarela y presentación profesional</p>
-            </div>
-
-            <div class="videos-grid">
-                <div class="video-card">
-                    <div class="video-placeholder">
-                        <img src="https://images.pexels.com/photos/1926769/pexels-photo-1926769.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Runway Video">
-                        <div class="play-button">
-                            <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
-                                <circle cx="30" cy="30" r="30" fill="rgba(255,255,255,0.9)"/>
-                                <path d="M24 18L42 30L24 42V18Z" fill="#D4A5A5"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <h4 class="video-title">Fashion Week 2024</h4>
-                    <p class="video-description">Pasarela - Colección Primavera/Verano</p>
-                </div>
-
-                <div class="video-card">
-                    <div class="video-placeholder">
-                        <img src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Presentation Video">
-                        <div class="play-button">
-                            <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
-                                <circle cx="30" cy="30" r="30" fill="rgba(255,255,255,0.9)"/>
-                                <path d="M24 18L42 30L24 42V18Z" fill="#D4A5A5"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <h4 class="video-title">Showreel</h4>
-                    <p class="video-description">Presentación profesional 2024</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <section id="about" class="about-section">
         <div class="container">
@@ -278,36 +456,40 @@
         </div>
     </section>
 
+    <!-- SECCIÓN CONTACTO SIN FORMULARIO (solo información) -->
     <section id="contact" class="contact-section">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Contacto</h2>
-                <p class="section-subtitle">¿Tienes un proyecto en mente? Hablemos</p>
+                <p class="section-subtitle">¿Tienes un proyecto en mente? Escríbeme directo</p>
             </div>
 
-            <div class="contact-content">
-                <div class="contact-info">
+            <div class="contact-content-simple">
+                <div class="contact-info-grid">
+                    <!-- Email -->
                     <div class="contact-item">
-                        <svg class="contact-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg class="contact-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                             <polyline points="22,6 12,13 2,6"></polyline>
                         </svg>
                         <div>
                             <h4>Email</h4>
-                            <a href="vlucyzg@gmail.com">vlucyzg@gmail.com</a>
+                            <a href="mailto:vlucyzg@gmail.com">vlucyzg@gmail.com</a>
                         </div>
                     </div>
+                    <!-- Teléfono / WhatsApp -->
                     <div class="contact-item">
-                        <svg class="contact-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg class="contact-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                         </svg>
                         <div>
-                            <h4>Teléfono</h4>
-                            <a href="https://wa.me/<+59177946936>">+59177946936</a>
+                            <h4>Teléfono / WhatsApp</h4>
+                            <a href="https://wa.me/59177946936" target="_blank">+591 77946936</a>
                         </div>
                     </div>
+                    <!-- Instagram -->
                     <div class="contact-item">
-                        <svg class="contact-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg class="contact-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                             <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
@@ -317,8 +499,9 @@
                             <a href="https://instagram.com/imilla_chaskanawi" target="_blank">@imilla_chaskanawi</a>
                         </div>
                     </div>
+                    <!-- Ubicación -->
                     <div class="contact-item">
-                        <svg class="contact-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg class="contact-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                             <circle cx="12" cy="10" r="3"></circle>
                         </svg>
@@ -328,22 +511,6 @@
                         </div>
                     </div>
                 </div>
-
-                <form class="contact-form">
-                    <div class="form-group">
-                        <input type="text" placeholder="Nombre completo" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" placeholder="Email" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" placeholder="Empresa / Agencia">
-                    </div>
-                    <div class="form-group">
-                        <textarea placeholder="Mensaje" rows="5" required></textarea>
-                    </div>
-                    <button type="submit" class="submit-button">Enviar Mensaje</button>
-                </form>
             </div>
         </div>
     </section>
@@ -353,14 +520,14 @@
             <div class="footer-content">
                 <p>&copy; 2026 Vania Zurita. Todos los derechos reservados.</p>
                 <div class="social-links">
-                    <a href="https://instagram.com" target="_blank" aria-label="Instagram">
+                    <a href="https://instagram.com/imilla_chaskanawi" target="_blank" aria-label="Instagram">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                             <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                         </svg>
                     </a>
-                    <a href="vlucyzg@gmail.com" aria-label="Email">
+                    <a href="mailto:vlucyzg@gmail.com" aria-label="Email">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                             <polyline points="22,6 12,13 2,6"></polyline>
