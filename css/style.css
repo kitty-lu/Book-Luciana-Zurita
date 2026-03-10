@@ -763,7 +763,7 @@ section {
 }
 
 .footer {
-    background: var(--dark);
+    background: var(--rose-primary);
     color: var(--white);
     padding: 2rem 0;
 }
