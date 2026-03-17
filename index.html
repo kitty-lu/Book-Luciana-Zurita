@@ -9,13 +9,921 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --rose-primary: #D4A5A5;
+    --rose-light: #E8C5C5;
+    --rose-lighter: #F5E1E1;
+    --gold: #D4AF7A;
+    --gold-light: #E8D4A8;
+    --cream: #FAF6F1;
+    --peach: #FFDDD2;
+    --lavender: #E5D9E8;
+    --mint: #D4E8E1;
+    --dark: #2C2C2C;
+    --gray: #6B6B6B;
+    --light-gray: #F8F8F8;
+    --white: #FFFFFF;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--dark);
+    background-color: var(--cream);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+#navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(250, 246, 241, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(212, 165, 165, 0.1);
+}
+
+#navbar.scrolled {
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--rose-primary);
+    text-decoration: none;
+    letter-spacing: 2px;
+    transition: color 0.3s ease;
+}
+
+.logo:hover {
+    color: var(--gold);
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2.5rem;
+    align-items: center;
+}
+
+.nav-link {
+    color: var(--dark);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--rose-primary), var(--gold));
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.nav-toggle span {
+    width: 25px;
+    height: 2px;
+    background: var(--rose-primary);
+    transition: all 0.3s ease;
+}
+
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: linear-gradient(135deg, var(--cream) 0%, var(--rose-lighter) 50%, var(--peach) 100%);
+    padding-top: 80px;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        radial-gradient(circle at 20% 50%, rgba(212, 165, 165, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(212, 175, 122, 0.1) 0%, transparent 50%);
+}
+
+.hero-content {
+    text-align: center;
+    z-index: 1;
+}
+
+.hero-text {
+    opacity: 0;
+    animation: fadeInUp 1s ease forwards;
+}
+
+.subtitle {
+    font-size: 1rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--rose-primary);
+    margin-bottom: 1rem;
+    font-weight: 300;
+}
+
+.hero-title {
+    font-size: clamp(4rem, 10vw, 8rem);
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 1rem;
+    color: var(--dark);
+}
+
+.hero-title .line {
+    display: block;
+}
+
+.hero-description {
+    font-size: 1.2rem;
+    color: var(--gray);
+    letter-spacing: 2px;
+    margin-bottom: 2rem;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: linear-gradient(135deg, var(--rose-primary), var(--gold));
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(212, 165, 165, 0.3);
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(212, 165, 165, 0.4);
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.scroll-indicator span {
+    display: block;
+    width: 24px;
+    height: 40px;
+    border: 2px solid var(--rose-primary);
+    border-radius: 20px;
+    position: relative;
+}
+
+.scroll-indicator span::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    background: var(--rose-primary);
+    border-radius: 50%;
+    transform: translateX(-50%);
+    animation: scroll 2s infinite;
+}
+
+@keyframes scroll {
+    0% {
+        top: 8px;
+        opacity: 1;
+    }
+    100% {
+        top: 24px;
+        opacity: 0;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+section {
+    padding: 6rem 0;
+    position: relative;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.section-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    margin-bottom: 1rem;
+    color: var(--dark);
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--rose-primary), var(--gold));
+    border-radius: 3px;
+}
+
+.section-subtitle {
+    color: var(--gray);
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+
+.portfolio-section {
+    background: var(--white);
+}
+
+.portfolio-filters {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 0.7rem 1.8rem;
+    background: transparent;
+    border: 2px solid var(--rose-light);
+    color: var(--gray);
+    cursor: pointer;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: linear-gradient(135deg, var(--rose-primary), var(--gold));
+    border-color: transparent;
+    color: var(--white);
+    transform: translateY(-2px);
+}
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.portfolio-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    cursor: pointer;
+    aspect-ratio: 3/4;
+    transition: all 0.3s ease;
+}
+
+.portfolio-item.hide {
+    display: none;
+}
+
+.portfolio-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.portfolio-item:hover img {
+    transform: scale(1.1);
+}
+
+.portfolio-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(212, 165, 165, 0.9), rgba(212, 175, 122, 0.9));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.portfolio-item:hover .portfolio-overlay {
+    opacity: 1;
+}
+
+.portfolio-category {
+    color: var(--white);
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.compcard-section {
+    background: linear-gradient(135deg, var(--rose-lighter) 0%, var(--cream) 100%);
+}
+
+.compcard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+.compcard-photo {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+}
+
+.compcard-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.main-photo {
+    grid-row: 1 / 3;
+}
+
+.compcard-info {
+    background: var(--white);
+    padding: 3rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+}
+
+.model-name {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: var(--rose-primary);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    background: var(--light-gray);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+    background: var(--rose-lighter);
+    transform: translateY(-3px);
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.3rem;
+}
+
+.stat-value {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--dark);
+}
+
+.experience-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 2rem;
+}
+
+.tag {
+    padding: 0.5rem 1.2rem;
+    background: linear-gradient(135deg, var(--rose-light), var(--gold-light));
+    color: var(--white);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+}
+
+.compcard-photos {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.compcard-photos img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.videos-section {
+    background: var(--white);
+}
+
+.videos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 3rem;
+}
+
+.video-card {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.video-card:hover {
+    transform: translateY(-10px);
+}
+
+.video-placeholder {
+    position: relative;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.video-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.video-card:hover .video-placeholder img {
+    transform: scale(1.1);
+}
+
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+}
+
+.video-card:hover .play-button {
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.video-title {
+    font-size: 1.5rem;
+    padding: 1.5rem 1.5rem 0.5rem;
+    color: var(--dark);
+}
+
+.video-description {
+    padding: 0 1.5rem 1.5rem;
+    color: var(--gray);
+}
+
+.about-section {
+    background: var(--cream);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.about-image {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.about-content .section-header {
+    text-align: left;
+    margin-bottom: 2rem;
+}
+
+.about-content .section-title::after {
+    left: 0;
+    transform: none;
+}
+
+.about-text {
+    margin-bottom: 1.5rem;
+    color: var(--gray);
+    line-height: 1.8;
+    font-size: 1rem;
+}
+
+.about-highlights {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin: 3rem 0;
+    padding: 2rem 0;
+    border-top: 2px solid var(--rose-lighter);
+    border-bottom: 2px solid var(--rose-lighter);
+}
+
+.highlight-item {
+    text-align: center;
+}
+
+.highlight-item h4 {
+    font-size: 3rem;
+    color: var(--rose-primary);
+    margin-bottom: 0.5rem;
+}
+
+.highlight-item p {
+    color: var(--gray);
+    font-size: 0.9rem;
+}
+
+.skills-section {
+    margin-top: 2rem;
+}
+
+.skills-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--dark);
+}
+
+.skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.skills-list span {
+    padding: 0.7rem 1.5rem;
+    background: var(--white);
+    border: 2px solid var(--rose-light);
+    border-radius: 25px;
+    color: var(--gray);
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.skills-list span:hover {
+    background: var(--rose-primary);
+    border-color: var(--rose-primary);
+    color: var(--white);
+    transform: translateY(-3px);
+}
+
+.contact-section {
+    background: linear-gradient(135deg, var(--white) 0%, var(--rose-lighter) 100%);
+}
+
+.contact-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.contact-item {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    padding: 1.5rem;
+    background: var(--white);
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.contact-icon {
+    color: var(--rose-primary);
+    flex-shrink: 0;
+}
+
+.contact-item h4 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--dark);
+}
+
+.contact-item a {
+    color: var(--rose-primary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-item a:hover {
+    color: var(--gold);
+}
+
+.contact-item p {
+    color: var(--gray);
+}
+
+.contact-form {
+    background: var(--white);
+    padding: 3rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid var(--rose-lighter);
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: var(--light-gray);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--rose-primary);
+    background: var(--white);
+}
+
+.submit-button {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, var(--rose-primary), var(--gold));
+    color: var(--white);
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Montserrat', sans-serif;
+    box-shadow: 0 10px 30px rgba(212, 165, 165, 0.3);
+}
+
+.submit-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(212, 165, 165, 0.4);
+}
+
+.footer {
+    background: var(--rose-primary);
+    color: var(--white);
+    padding: 2rem 0;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-content p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+}
+
+.social-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.social-links a {
+    color: var(--rose-light);
+    transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+    color: var(--gold);
+    transform: translateY(-3px);
+}
+
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+
+.fade-in-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (max-width: 1024px) {
+    .compcard-grid,
+    .about-grid,
+    .contact-content {
+        grid-template-columns: 1fr;
+    }
+
+    .main-photo {
+        grid-row: auto;
+    }
+
+    .compcard-photos {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .videos-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-menu {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        flex-direction: column;
+        background: var(--cream);
+        width: 100%;
+        padding: 2rem;
+        transition: left 0.3s ease;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-menu.active {
+        left: 0;
+    }
+
+    .nav-toggle {
+        display: flex;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+    }
+
+    .portfolio-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+    }
+
+    .videos-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-highlights {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-content {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    section {
+        padding: 4rem 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .compcard-info {
+        padding: 2rem;
+    }
+
+    .contact-form {
+        padding: 2rem;
+    }
+}
+
+</style>
     <style>
         /* ===== AJUSTES SOLICITADOS ===== */
         /* 1. FOTO DE FONDO EN HERO (ya estaba) */
         .hero {
             position: relative;
-            background-image: url('galeria/casual/_DSC0311.jpg');
+            background-image: url('_DSC0311.jpg');
             background-size: cover;
             background-position: center 20%;
             background-repeat: no-repeat;
@@ -272,103 +1180,103 @@
 
             <div class="portfolio-grid">
                 <div class="portfolio-item gala" data-category="gala">
-                    <img src="galeria/gala/_DSC0043.jpg" alt="Jorge Paredes Fotografía">
+                    <img src="_DSC0043.jpg" alt="Jorge Paredes Fotografía">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Jorge Paredes Fotografía</span>
                     </div>
                 </div>
                 <div class="portfolio-item gala" data-category="gala">
-                    <img src="galeria/gala/_DSC0074.jpg" alt="Jorge Paredes Fotografía y L'Eleganza">
+                    <img src="_DSC0074.jpg" alt="Jorge Paredes Fotografía y L'Eleganza">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Jorge Paredes Fotografía y L'Eleganza</span>
                     </div>
                 </div>
                 <div class="portfolio-item gala" data-category="gala">
-                    <img src="galeria/gala/_DSC0080.jpg" alt="Jorge Paredes Fotografía y L'Eleganza">
+                    <img src="_DSC0080.jpg" alt="Jorge Paredes Fotografía y L'Eleganza">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Jorge Paredes Fotografía y L'Eleganza</span>
                     </div>
                 </div>
                 <div class="portfolio-item gala" data-category="gala">
-                    <img src="galeria/gala/_DSC0093.jpg" alt="Jorge Paredes Fotografía">
+                    <img src="_DSC0093.jpg" alt="Jorge Paredes Fotografía">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Jorge Paredes Fotografía</span>
                     </div>
                 </div>
                 <div class="portfolio-item gala" data-category="gala">
-                    <img src="galeria/gala/_DSC0110.jpg" alt="Jorge Paredes Fotografía">
+                    <img src="_DSC0110.jpg" alt="Jorge Paredes Fotografía">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Jorge Paredes Fotografía</span>
                     </div>
                 </div>
                 <div class="portfolio-item gala" data-category="gala">
-                    <img src="galeria/gala/_DSC0129.jpg" alt="Jorge Paredes Fotografía">
+                    <img src="_DSC0129.jpg" alt="Jorge Paredes Fotografía">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Jorge Paredes Fotografía</span>
                     </div>
                 </div>
                 <div class="portfolio-item gala" data-category="gala">
-                    <img src="galeria/gala/_DSC0450.jpg" alt="Jorge Paredes Fotografía y L'Eleganza">
+                    <img src="_DSC0450.jpg" alt="Jorge Paredes Fotografía y L'Eleganza">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Jorge Paredes Fotografía y L'Eleganza</span>
                     </div>
                 </div>
                                 <div class="portfolio-item gala" data-category="gala">
-                    <img src="galeria/gala/_DSC0248.jpg" alt="Jorge Paredes Fotografía y L'Eleganza">
+                    <img src="_DSC0248.jpg" alt="Jorge Paredes Fotografía y L'Eleganza">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Jorge Paredes Fotografía y L'Eleganza</span>
                     </div>
                 </div>
 
                 <div class="portfolio-item casual" data-category="casual">
-                    <img src="galeria/casual/_DSC0031.jpg" alt="Jorge Paredes Fotografía">
+                    <img src="_DSC0031.jpg" alt="Jorge Paredes Fotografía">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Jorge Paredes Fotografía</span>
                     </div>
                 </div>
 
                                               <div class="portfolio-item casual" data-category="casual">
-                    <img src="galeria/casual/_DSC0014.jpg" alt="Jorge Paredes Fotografía">
+                    <img src="_DSC0014.jpg" alt="Jorge Paredes Fotografía">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Jorge Paredes Fotografía</span>
                     </div>
                 </div>  
 
                 <div class="portfolio-item casual" data-category="casual">
-                    <img src="galeria/casual/_DSC0295.jpg" alt="Jorge Paredes Fotografía y El Garage de Motos">
+                    <img src="_DSC0295.jpg" alt="Jorge Paredes Fotografía y El Garage de Motos">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Jorge Paredes Fotografía y El Garage de Motos</span>
                     </div>
                 </div>
                 <div class="portfolio-item casual" data-category="casual">
-                    <img src="galeria/casual/_DSC0303.jpg" alt="Jorge Paredes Fotografía y El Garage de Motos">
+                    <img src="_DSC0303.jpg" alt="Jorge Paredes Fotografía y El Garage de Motos">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Jorge Paredes Fotografía y El Garage de Motos</span>
                     </div>
                 </div>
 
                 <div class="portfolio-item casual" data-category="casual">
-                    <img src="galeria/casual/_DSC0423.jpg" alt="Jorge Paredes Fotografía y El Garage de Motos">
+                    <img src="_DSC0423.jpg" alt="Jorge Paredes Fotografía y El Garage de Motos">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Jorge Paredes Fotografía y El Garage de Motos</span>
                     </div>
                 </div>
                                 <div class="portfolio-item casual" data-category="casual">
-                    <img src="galeria/casual/_DSC0399.jpg" alt="Jorge Paredes Fotografía y El Garage de Motos">
+                    <img src="_DSC0399.jpg" alt="Jorge Paredes Fotografía y El Garage de Motos">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Jorge Paredes Fotografía y El Garage de Motos</span>
                     </div>
                 </div>
 
                                 <div class="portfolio-item casual" data-category="casual">
-                    <img src="galeria/casual/WhatsApp Image 2026-02-23 at 4.50.51 PM (1).jpeg" alt="Carnaval Show x KUYANA">
+                    <img src="WhatsApp Image 2026-02-23 at 4.50.51 PM (1).jpeg" alt="Carnaval Show x KUYANA">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Carnaval Show x KUYANA</span>
                     </div>
                 </div>
 
                                               <div class="portfolio-item casual" data-category="casual">
-                    <img src="galeria/casual/WhatsApp Image 2026-02-23 at 4.53.58 PM (1).jpeg" alt="Spring Dance Cochabamba x PAPAI DO BRAS, Eventos BOLIVIA . net">
+                    <img src="WhatsApp Image 2026-02-23 at 4.53.58 PM (1).jpeg" alt="Spring Dance Cochabamba x PAPAI DO BRAS, Eventos BOLIVIA . net">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Spring Dance Cochabamba x PAPAI DO BRAS</span>
                     </div>
@@ -377,19 +1285,19 @@
             
 
                 <div class="portfolio-item traje de baño" data-category="traje de baño">
-                    <img src="galeria/traje de baño/_DSC0037.jpg" alt="Jorge Paredes Fotografía">
+                    <img src="_DSC0037.jpg" alt="Jorge Paredes Fotografía">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Jorge Paredes Fotografía</span>
                     </div>
                 </div>
                <div class="portfolio-item traje de baño" data-category="traje de baño">
-                    <img src="galeria/traje de baño/_DSC0056.jpg" alt="Jorge Paredes Fotografía">
+                    <img src="_DSC0056.jpg" alt="Jorge Paredes Fotografía">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Jorge Paredes Fotografía</span>
                     </div>
                 </div>
                <div class="portfolio-item traje de baño" data-category="traje de baño">
-                    <img src="galeria/traje de baño/_DSC0070.jpg" alt="Jorge Paredes Fotografía">
+                    <img src="_DSC0070.jpg" alt="Jorge Paredes Fotografía">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Jorge Paredes Fotografía</span>
                     </div>
@@ -412,7 +1320,7 @@
             <div class="compcard-grid-modern">
                 <!-- Foto principal izquierda -->
                 <div class="compcard-main-photo">
-                    <img src="galeria/gala/WhatsApp Image 2026-02-23 at 4.22.46 PM.jpeg" alt="Vania Zurita Main">
+                    <img src="WhatsApp Image 2026-02-23 at 4.22.46 PM.jpeg" alt="Vania Zurita Main">
                 </div>
 
                 <!-- Lado derecho: info + miniaturas -->
@@ -467,7 +1375,7 @@
 
                     <!-- Miniaturas adicionales en fila (ya no están "chuecas") -->
                     <div class="compcard-thumbnails">
-                        <img src="galeria/casual/WhatsApp Image 2026-02-23 at 4.50.51 PM.jpeg" alt="Vania Profile 2">
+                        <img src="WhatsApp Image 2026-02-23 at 4.50.51 PM.jpeg" alt="Vania Profile 2">
 
                     </div>
                 </div>
@@ -480,7 +1388,7 @@
         <div class="container">
             <div class="about-grid">
                 <div class="about-image">
-                    <img src="galeria/casual/WhatsApp Image 2026-02-23 at 4.53.58 PM.jpeg" alt="About Vania">
+                    <img src="WhatsApp Image 2026-02-23 at 4.53.58 PM.jpeg" alt="About Vania">
                 </div>
                 <div class="about-content">
                     <div class="section-header">
@@ -613,7 +1521,7 @@
                 <p>&copy; 2026 Vania Zurita. Todos los derechos reservados.</p>
                 <div class="social-links">
                     <a href="https://instagram.com/imilla_chaskanawi" target="_blank" aria-label="Instagram">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"  stroke-width="2">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                             <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
@@ -630,6 +1538,223 @@
         </div>
     </footer>
 
-    <script type="module" src="js/scripts.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const navbar = document.getElementById('navbar');
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+    const contactForm = document.querySelector('.contact-form');
+
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 100) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+
+        revealOnScroll();
+    });
+
+    navToggle.addEventListener('click', function() {
+        navMenu.classList.toggle('active');
+        const spans = navToggle.querySelectorAll('span');
+        spans[0].style.transform = navMenu.classList.contains('active') ? 'rotate(45deg) translate(5px, 5px)' : 'none';
+        spans[1].style.opacity = navMenu.classList.contains('active') ? '0' : '1';
+        spans[2].style.transform = navMenu.classList.contains('active') ? 'rotate(-45deg) translate(7px, -6px)' : 'none';
+    });
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+
+            if (targetSection) {
+                const offsetTop = targetSection.offsetTop - 80;
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+
+            navMenu.classList.remove('active');
+            const spans = navToggle.querySelectorAll('span');
+            spans[0].style.transform = 'none';
+            spans[1].style.opacity = '1';
+            spans[2].style.transform = 'none';
+        });
+    });
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+
+            const filterValue = this.getAttribute('data-filter');
+
+            portfolioItems.forEach(item => {
+                if (filterValue === 'all') {
+                    item.style.display = 'block';
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.transform = 'scale(1)';
+                    }, 10);
+                } else {
+                    if (item.getAttribute('data-category') === filterValue) {
+                        item.style.display = 'block';
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'scale(1)';
+                        }, 10);
+                    } else {
+                        item.style.opacity = '0';
+                        item.style.transform = 'scale(0.8)';
+                        setTimeout(() => {
+                            item.style.display = 'none';
+                        }, 300);
+                    }
+                }
+            });
+        });
+    });
+
+    portfolioItems.forEach(item => {
+        item.style.transition = 'all 0.3s ease';
+    });
+
+    function revealOnScroll() {
+        const elements = document.querySelectorAll('.portfolio-item, .video-card, .stat-item, .contact-item, .about-text');
+
+        elements.forEach(element => {
+            const elementTop = element.getBoundingClientRect().top;
+            const elementVisible = 150;
+
+            if (elementTop < window.innerHeight - elementVisible) {
+                element.classList.add('fade-in-up', 'visible');
+            }
+        });
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    document.querySelectorAll('.portfolio-item, .stat-item, .video-card').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'all 0.6s ease';
+        observer.observe(el);
+    });
+
+    const videoPlaceholders = document.querySelectorAll('.video-placeholder');
+    videoPlaceholders.forEach(placeholder => {
+        placeholder.addEventListener('click', function() {
+            const videoCard = this.closest('.video-card');
+            const title = videoCard.querySelector('.video-title').textContent;
+            alert(`Video "${title}" - En producción, aquí se reproducirá el video real.`);
+        });
+    });
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            const submitBtn = this.querySelector('.submit-button');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Enviando...';
+            submitBtn.disabled = true;
+
+            setTimeout(() => {
+                submitBtn.textContent = 'Mensaje Enviado';
+                submitBtn.style.background = 'linear-gradient(135deg, #7CB342, #558B2F)';
+
+                setTimeout(() => {
+                    this.reset();
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.style.background = 'linear-gradient(135deg, var(--rose-primary), var(--gold))';
+                }, 2000);
+            }, 1500);
+        });
+    }
+
+    const heroTitle = document.querySelector('.hero-title');
+    if (heroTitle) {
+        const lines = heroTitle.querySelectorAll('.line');
+        lines.forEach((line, index) => {
+            line.style.opacity = '0';
+            line.style.transform = 'translateY(50px)';
+            setTimeout(() => {
+                line.style.transition = 'all 0.8s ease';
+                line.style.opacity = '1';
+                line.style.transform = 'translateY(0)';
+            }, 200 * index);
+        });
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    revealOnScroll();
+
+    const cursorFollower = document.createElement('div');
+    cursorFollower.style.cssText = `
+        position: fixed;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(212, 165, 165, 0.4), transparent);
+        pointer-events: none;
+        z-index: 9999;
+        transition: transform 0.15s ease;
+        display: none;
+    `;
+    document.body.appendChild(cursorFollower);
+
+    document.addEventListener('mousemove', (e) => {
+        if (window.innerWidth > 1024) {
+            cursorFollower.style.display = 'block';
+            cursorFollower.style.left = e.clientX - 10 + 'px';
+            cursorFollower.style.top = e.clientY - 10 + 'px';
+        }
+    });
+
+    document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            cursorFollower.style.transform = 'scale(2)';
+        });
+        el.addEventListener('mouseleave', () => {
+            cursorFollower.style.transform = 'scale(1)';
+        });
+    });
+});
+
+</script>
 </body>
 </html>
